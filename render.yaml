@@ -1,0 +1,22 @@
+# One-click hosting on Render (render.com → New → Blueprint → pick this repo).
+services:
+  - type: web
+    name: dawaasathi
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DEMO_MODE
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      # Optional: a free Supabase / Neon PostgreSQL URL keeps data across restarts.
+      - key: DATABASE_URL
+        sync: false
+      # Optional: AI answers in the Saathi voice assistant.
+      - key: ANTHROPIC_API_KEY
+        sync: false
