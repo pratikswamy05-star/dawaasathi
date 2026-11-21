@@ -5,6 +5,7 @@ import App from './App';
 import './index.css';
 import { initOfflineSync } from './lib/offline';
 import { initVoices } from './lib/speech';
+import { startAutoTranslate } from './lib/autoTranslate';
 
 /** Friendly fallback instead of a blank screen. */
 class ErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
@@ -40,3 +41,6 @@ createRoot(document.getElementById('root')!).render(
     </ErrorBoundary>
   </StrictMode>,
 );
+
+// Translate staff / admin screens (and any leftover English) when Kannada or Hindi is chosen.
+startAutoTranslate();
