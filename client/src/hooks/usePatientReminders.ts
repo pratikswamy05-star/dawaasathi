@@ -39,10 +39,11 @@ export function usePatientReminders(patientId: number | null) {
       for (const d of dosesRef.current) {
         if (d.status !== 'pending') continue;
         const late = (Date.now() - new Date(d.scheduled_at).getTime()) / 60000;
-        const serverStage = Math.max(0, d.reminder_count - 1);
+        // Only ring for doses that are actually due: from their time up to 90 minutes after. Never for later doses.
+        if (late < 0 || late > 90) continue;
+        const serverStage = d.reminder_count > 0 ? d.reminder_count - 1 : 0;
         const localStage = STAGES.filter((s) => late >= s).length - 1;
         const stage = Math.max(serverStage, localStage);
-        if (stage < 0 || late > 90) continue;
         const key = `${d.id}-${stage}`;
         if (done.has(key)) continue;
         done.add(key);
