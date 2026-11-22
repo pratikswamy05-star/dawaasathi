@@ -13,6 +13,9 @@ import {
   LogOut,
   MessageCircle,
   PhoneCall,
+  Database,
+  CreditCard,
+  Route,
   Package,
   Pill,
   ShieldCheck,
@@ -46,6 +49,7 @@ const NAV: Record<Role, NavItem[]> = {
     { to: '/patient/dashboard', label: 'Home', tKey: 'home', icon: <Home aria-hidden /> },
     { to: '/patient/today', label: 'Today', tKey: 'today', icon: <ClipboardList aria-hidden /> },
     { to: '/patient/reminders', label: 'Reminder calls', tKey: 'voiceReminders', icon: <PhoneCall aria-hidden /> },
+    { to: '/patient/card', label: 'Emergency card', tKey: 'emergencyCard', icon: <CreditCard aria-hidden /> },
     { to: '/patient/vitals', label: 'Readings', tKey: 'vitals', icon: <HeartPulse aria-hidden /> },
     { to: '/patient/doctor', label: 'Doctor', tKey: 'doctorCall', icon: <Video aria-hidden /> },
     { to: '/patient/scan', label: 'Scan', tKey: 'scanMedicine', icon: <ScanLine aria-hidden /> },
@@ -65,6 +69,7 @@ const NAV: Record<Role, NavItem[]> = {
   ],
   asha: [
     { to: '/asha/dashboard', label: 'Dashboard', icon: <BarChart3 aria-hidden /> },
+    { to: '/asha/visits', label: "Today's visits", icon: <Route aria-hidden /> },
     { to: '/asha/patients', label: 'Patients', icon: <Users aria-hidden /> },
     { to: '/asha/alerts', label: 'Alerts', icon: <Bell aria-hidden /> },
     { to: '/asha/reminders', label: 'Reminder calls', icon: <PhoneCall aria-hidden /> },
@@ -84,6 +89,7 @@ const NAV: Record<Role, NavItem[]> = {
   admin: [
     { to: '/admin/dashboard', label: 'Dashboard', icon: <BarChart3 aria-hidden /> },
     { to: '/admin/users', label: 'Users', icon: <Users aria-hidden /> },
+    { to: '/admin/database', label: 'Database', icon: <Database aria-hidden /> },
     { to: '/asha/patients', label: 'Patients', icon: <ShieldCheck aria-hidden /> },
     { to: '/asha/alerts', label: 'Alerts', icon: <AlertTriangle aria-hidden /> },
   ],

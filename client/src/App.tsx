@@ -7,7 +7,10 @@ import Ask from './pages/Ask';
 import { LoginChooser, PortalLogin } from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import CaregiverDashboard from './pages/caregiver/CaregiverDashboard';
+import DatabaseViewer from './pages/admin/DatabaseViewer';
+import EmergencyCard from './pages/EmergencyCard';
 import PatientDetail from './pages/PatientDetail';
+import Visits from './pages/Visits';
 import Pharmacy from './pages/Pharmacy';
 import PillScan from './pages/PillScan';
 import Reminders from './pages/Reminders';
@@ -52,6 +55,9 @@ export default function App() {
           <Route path="/patient/pharmacy" element={guard(['patient'], <Pharmacy />)} />
           <Route path="/patient/report" element={guard(['patient'], <Report />)} />
           <Route path="/patient/reminders" element={guard(['patient'], <Reminders />)} />
+          <Route path="/patient/card" element={guard(['patient'], <EmergencyCard />)} />
+          <Route path="/asha/visits" element={guard(['asha', 'admin'], <Visits />)} />
+          <Route path="/patients/:id/card" element={guard(['caregiver', 'asha', 'doctor', 'admin'], <EmergencyCard />)} />
           <Route path="/caregiver/reminders" element={guard(['caregiver'], <Reminders />)} />
           <Route path="/asha/reminders" element={guard(['asha'], <Reminders />)} />
           <Route path="/doctor/reminders" element={guard(['doctor', 'admin'], <Reminders />)} />
@@ -78,6 +84,7 @@ export default function App() {
 
           <Route path="/admin/dashboard" element={guard(['admin'], <AdminDashboard />)} />
           <Route path="/admin/users" element={guard(['admin'], <AdminUsers />)} />
+          <Route path="/admin/database" element={guard(['admin'], <DatabaseViewer />)} />
 
           <Route path="/patients/:id" element={guard(['caregiver', 'asha', 'doctor', 'admin'], <PatientDetail />)} />
           <Route path="/patients/:id/report" element={guard(['caregiver', 'asha', 'doctor', 'admin'], <Report />)} />

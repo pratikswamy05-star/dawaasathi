@@ -100,3 +100,43 @@ medicationsRouter.get(
     res.json({ medications: await q('select id, name, active_ingredients, strength, category, instructions from medications order by category, name') });
   }),
 );
+
+// ---- Read-only database viewer (admin only) ----
+const DB_TABLES = [
+  'users', 'patients', 'caregivers', 'doctors', 'asha_workers', 'medications', 'prescriptions', 'medication_schedules',
+  'dose_logs', 'refills', 'alerts', 'patient_risk_scores', 'notifications', 'audit_logs', 'vitals', 'teleconsults',
+  'pharmacies', 'voice_reminders', 'asha_visits', 'streak_milestones',
+] as const;
+const HIDDEN_COLS = new Set(['password_hash', 'password', 'token', 'refresh_token']);
+
+adminRouter.get(
+  '/db/tables',
+  ah(async (_req, res) => {
+    const tables = [];
+    for (const name of DB_TABLES) {
+      const r = await one<{ n: string }>(`select count(*)::text as n from ${name}`);
+      tables.push({ name, rows: Number(r?.n ?? 0) });
+    }
+    res.json({ tables });
+  }),
+);
+
+adminRouter.get(
+  '/db/tables/:name',
+  ah(async (req, res) => {
+    const name = String(req.params.name);
+    if (!(DB_TABLES as readonly string[]).includes(name)) throw new HttpError(404, 'Unknown table');
+    const limit = Math.min(Math.max(Number(req.query.limit) || 50, 1), 200);
+    const cols = await q<{ column_name: string }>(
+      `select column_name from information_schema.columns where table_name = $1 and table_schema = current_schema() order by ordinal_position`,
+      [name],
+    );
+    const visible = cols.map((c) => c.column_name).filter((c) => !HIDDEN_COLS.has(c));
+    const hasId = visible.includes('id');
+    const total = await one<{ n: string }>(`select count(*)::text as n from ${name}`);
+    const rows = await q(
+      `select ${visible.map((c) => `"${c}"`).join(', ')} from ${name} ${hasId ? 'order by id desc' : ''} limit ${limit}`,
+    );
+    res.json({ name, columns: visible, rows, total: Number(total?.n ?? 0), hidden: cols.length - visible.length });
+  }),
+);
