@@ -7,6 +7,7 @@ import { AdherenceChart, ConflictList, DoseBars, SafetyScoreCard, StockList } fr
 import PrescriptionForm from '../components/PrescriptionForm';
 import RefillForm from '../components/RefillForm';
 import VitalsPanel from '../components/VitalsPanel';
+import WhatsAppAlerts from '../components/WhatsAppAlerts';
 import { Badge, Button, Card, ErrorState, PageHeader, Spinner } from '../components/ui';
 import { useApi } from '../hooks/useApi';
 import { useConfirmDose } from '../hooks/useConfirmDose';
@@ -175,6 +176,7 @@ export default function PatientDetail() {
 
         <div className="space-y-5">
           <SafetyScoreCard risk={data.risk} />
+          <WhatsAppAlerts patientId={p.id} />
           <Card title="Medicine stock">
             <StockList refills={data.refills} />
             {role !== 'patient' && (

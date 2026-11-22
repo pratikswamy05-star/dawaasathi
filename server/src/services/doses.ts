@@ -6,6 +6,7 @@ import { addDays, atLocal, fmt12, hhmmOf, localDate } from '../domain/time';
 import { HttpError } from '../http';
 import { assertPatientAccess, type AuthUser } from './access';
 import { createAlert } from './alerts';
+import { checkWhatsAppMisses } from './whatsapp';
 
 /** Create today's dose_logs rows from active schedules (idempotent thanks to the unique key). */
 export async function ensureDoseLogs(date: string, patientId?: number) {
@@ -78,6 +79,7 @@ export async function escalateMissed(dose: { id: number; patient_id: number; sch
       dedupeKey: `repeat-${dose.patient_id}-${localDate(now())}`,
     });
   }
+  await checkWhatsAppMisses(dose.patient_id);
 }
 
 export interface ConfirmInput {

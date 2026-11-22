@@ -269,4 +269,18 @@ create table if not exists streak_milestones (
   created_at timestamptz not null default now(),
   unique (patient_id, days, streak_start)
 );
+
+create table if not exists whatsapp_messages (
+  id serial primary key,
+  patient_id int not null references patients (id) on delete cascade,
+  user_id int references users (id) on delete set null,
+  phone text not null,
+  body text not null,
+  reason text not null,
+  status text not null default 'preview' check (status in ('preview', 'sent', 'failed')),
+  provider_id text,
+  error text,
+  dedupe_key text unique,
+  created_at timestamptz not null default now()
+);
 `;

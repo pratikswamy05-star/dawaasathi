@@ -1,4 +1,5 @@
 import StreakCard from '../../components/StreakCard';
+import WhatsAppAlerts from '../../components/WhatsAppAlerts';
 import { LifeBuoy, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { api, errorText } from '../../api/client';
@@ -48,6 +49,7 @@ export default function CaregiverDashboard() {
   return (
     <div className="space-y-8">
       <PageHeader title="Caregiver dashboard" subtitle="You will be alerted if a dose is missed. Never give an extra dose — ask the doctor if unsure." />
+      <WhatsAppAlerts />
       {data.patients.map(({ summary: s, streak, today, refills, alerts }) => {
         const missed = today.filter((d) => d.status === 'missed');
         const due = today.filter((d) => d.status === 'pending' && new Date(d.scheduled_at).getTime() <= Date.now());

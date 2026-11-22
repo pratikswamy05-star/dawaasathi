@@ -105,7 +105,7 @@ medicationsRouter.get(
 const DB_TABLES = [
   'users', 'patients', 'caregivers', 'doctors', 'asha_workers', 'medications', 'prescriptions', 'medication_schedules',
   'dose_logs', 'refills', 'alerts', 'patient_risk_scores', 'notifications', 'audit_logs', 'vitals', 'teleconsults',
-  'pharmacies', 'voice_reminders', 'asha_visits', 'streak_milestones',
+  'pharmacies', 'voice_reminders', 'asha_visits', 'streak_milestones', 'whatsapp_messages',
 ] as const;
 const HIDDEN_COLS = new Set(['password_hash', 'password', 'token', 'refresh_token']);
 

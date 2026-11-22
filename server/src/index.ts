@@ -10,6 +10,7 @@ import { seedFeatures } from './db/seedFeatures';
 import { errorHandler } from './http';
 import { startScheduler } from './jobs/scheduler';
 import { requireAuth } from './middleware/auth';
+import { whatsappRouter } from './routes/whatsapp';
 import { adminRouter, medicationsRouter, staffRouter } from './routes/admin';
 import { alertsRouter, notificationsRouter } from './routes/alerts';
 import { authRouter } from './routes/auth';
@@ -83,6 +84,7 @@ async function main() {
   app.use('/api/voice-reminders', voiceRouter);
   app.use('/api/assistant', assistantRouter);
   app.use('/api/visits', visitsRouter);
+  app.use('/api/whatsapp', whatsappRouter);
 
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
   app.use(errorHandler);

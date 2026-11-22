@@ -6,6 +6,7 @@
  *   4. refresh risk scores
  */
 import { checkStreakMilestone } from '../services/streak';
+import { checkWhatsAppMisses } from '../services/whatsapp';
 import { now } from '../clock';
 import { config } from '../config';
 import { q } from '../db';
@@ -84,6 +85,7 @@ export async function tickOnce() {
       }
       await riskFor(pid);
       await checkStreakMilestone(pid);
+      await checkWhatsAppMisses(pid);
     }
   } finally {
     running = false;

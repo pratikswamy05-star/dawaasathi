@@ -38,4 +38,16 @@ export const config = {
     criticalDays: num(process.env.REFILL_CRITICAL_DAYS, 3),
     bufferDays: num(process.env.REFILL_BUFFER_DAYS, 2),
   },
+  /**
+   * WhatsApp alert to the caregiver when MORE THAN 2 doses are missed within the window.
+   * Real sending needs a Twilio WhatsApp account (server-side keys only). Without keys the
+   * app runs in demo mode: the message is saved and the caregiver gets a one-tap WhatsApp link.
+   */
+  whatsapp: {
+    missThreshold: num(process.env.WHATSAPP_MISS_THRESHOLD, 3),
+    windowHours: num(process.env.WHATSAPP_MISS_WINDOW_HOURS, 48),
+    twilioSid: process.env.TWILIO_ACCOUNT_SID || '',
+    twilioToken: process.env.TWILIO_AUTH_TOKEN || '',
+    twilioFrom: process.env.TWILIO_WHATSAPP_FROM || '', // e.g. whatsapp:+14155238886
+  },
 };
