@@ -133,6 +133,7 @@ export interface Overview {
   conflicts: Conflict[];
   risk: Risk;
   prescriptions: Prescription[];
+  streak?: Streak;
 }
 
 export interface PatientSummary {
@@ -303,4 +304,50 @@ export interface ReminderRx {
   prescriber_name: string;
   times: string[];
   dosesPerDay: number;
+}
+
+export interface Streak {
+  current: number;
+  best: number;
+  start: string | null;
+  next: number | null;
+  reached: number | null;
+  last7: { date: string; state: 'full' | 'missed' | 'open' | 'none' }[];
+}
+
+export interface EmergencyCardData {
+  patient: {
+    id: number;
+    name: string;
+    age: number | null;
+    gender: string | null;
+    village: string | null;
+    phone: string | null;
+    conditions: string[];
+    bloodGroup: string | null;
+    allergies: string | null;
+    notes: string | null;
+  };
+  medicines: { name: string; dosage: string | null; times: string[]; food: string; ingredients: string[] }[];
+  contacts: { role: string; name: string; phone: string | null }[];
+  latestReadings: { kind: string; display: string; at: string }[];
+  generatedAt: string;
+}
+
+export interface VisitItem {
+  patientId: number;
+  name: string;
+  age: number | null;
+  village: string;
+  phone: string | null;
+  caregiverName: string | null;
+  caregiverPhone: string | null;
+  risk: Risk;
+  streak: number;
+  priority: number;
+  urgent: boolean;
+  reasons: { code: string; text: string; weight: number; tone: 'red' | 'amber' | 'green' | 'slate' }[];
+  lastVisit: string | null;
+  today: { status: 'visited' | 'not_home'; note: string | null } | null;
+  mapsUrl: string;
 }

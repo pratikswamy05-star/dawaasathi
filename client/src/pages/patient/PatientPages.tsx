@@ -3,6 +3,7 @@ import { Phone, User as UserIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import DoseCard from '../../components/DoseCard';
 import { AdherenceChart, DoseBars, StockList } from '../../components/Insights';
+import StreakCard from '../../components/StreakCard';
 import { Card, EmptyState, ErrorState, ProgressRing, Spinner } from '../../components/ui';
 import { useApi } from '../../hooks/useApi';
 import { useConfirmDose } from '../../hooks/useConfirmDose';
@@ -58,6 +59,7 @@ export function PatientDashboard() {
         </div>
       </section>
       {stale && <p className="rounded-xl bg-warn-50 p-3 font-semibold text-warn-700">{t('offline')}</p>}
+      {data.streak && <StreakCard streak={data.streak} />}
 
       <section aria-labelledby="next-title" className="animate-fade-in-up [animation-delay:100ms]">
         <h2 id="next-title" className="mb-2 flex items-center gap-2 text-2xl font-extrabold">
@@ -88,6 +90,7 @@ export function PatientDashboard() {
             ['/patient/pharmacy', '💊', t('pharmacy'), 'from-warn-600 to-warn-500'],
             ['/patient/ask', '💬', t('askTitle'), 'from-navy-600 to-teal-500'],
             ['/patient/report', '📄', t('weeklyReport'), 'from-slate-600 to-slate-400'],
+            ['/patient/card', '🆘', t('emergencyCard'), 'from-bad-700 to-bad-500'],
           ] as const
         ).map(([to, icon, label, grad]) => (
           <Link key={to} to={to} className="card group flex min-h-[132px] flex-col items-center justify-center gap-3 p-4 text-center text-lg font-bold leading-tight">

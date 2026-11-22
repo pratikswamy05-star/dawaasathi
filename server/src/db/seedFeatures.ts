@@ -64,6 +64,15 @@ export async function seedFeatures() {
   ] as const)
     await q(`update patients set reminder_languages = $2::jsonb where name = $1 and reminder_languages = '[]'::jsonb`, [name, JSON.stringify(langs)]);
 
+  // Demo emergency-card details (dummy data).
+  for (const [name, bg, allergy] of [
+    ['Lakshmi', 'B+', 'Penicillin'],
+    ['Ramesh', 'O+', 'None known'],
+    ['Gowramma', 'A+', 'Sulfa drugs'],
+    ['Puttamma', 'AB+', 'None known'],
+  ] as const)
+    await q(`update patients set blood_group = $2, allergies = $3 where name = $1 and blood_group is null`, [name, bg, allergy]);
+
   const vCount = await one('select count(*)::int as n from vitals');
   if (Number(vCount?.n ?? 0) === 0) {
     // [patient, kind, value pairs from oldest to newest, every N days, time of day]

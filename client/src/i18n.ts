@@ -126,6 +126,13 @@ const en = {
   endTest: 'End test call',
   voiceReminders: 'Reminder calls',
   voiceRemindersHelp: 'At medicine time your phone rings and you hear a message from your family, ASHA worker or doctor.',
+  streakTitle: 'Days in a row',
+  streakDays: '{n}-day streak',
+  streakStart: 'Take all of today’s medicines to start a streak!',
+  streakNext: '{left} more days to a {m}-day star ⭐',
+  streakBest: 'Best: {n} days',
+  emergencyCard: 'Emergency card',
+  emergencyCardHelp: 'Show this to a doctor, nurse or ambulance. Scanning the QR code shows your medicines and family phone — no internet needed.',
 };
 
 type Dict = typeof en;
@@ -249,6 +256,13 @@ const kn: Partial<Dict> = {
   endTest: 'ಪರೀಕ್ಷೆ ಮುಗಿಸಿ',
   voiceReminders: 'ನೆನಪಿನ ಕರೆಗಳು',
   voiceRemindersHelp: 'ಔಷಧಿ ಸಮಯದಲ್ಲಿ ನಿಮ್ಮ ಫೋನ್ ರಿಂಗ್ ಆಗುತ್ತದೆ ಮತ್ತು ನಿಮ್ಮ ಕುಟುಂಬ, ಆಶಾ ಕಾರ್ಯಕರ್ತೆ ಅಥವಾ ವೈದ್ಯರ ಸಂದೇಶ ಕೇಳಿಸುತ್ತದೆ.',
+  streakTitle: 'ಸತತ ದಿನಗಳು',
+  streakDays: '{n} ದಿನಗಳ ಸರಣಿ',
+  streakStart: 'ಇಂದಿನ ಎಲ್ಲಾ ಔಷಧಿ ತೆಗೆದುಕೊಂಡು ಸರಣಿ ಆರಂಭಿಸಿ!',
+  streakNext: '{m} ದಿನದ ನಕ್ಷತ್ರಕ್ಕೆ ಇನ್ನು {left} ದಿನ ⭐',
+  streakBest: 'ಅತ್ಯುತ್ತಮ: {n} ದಿನ',
+  emergencyCard: 'ತುರ್ತು ಕಾರ್ಡ್',
+  emergencyCardHelp: 'ಇದನ್ನು ವೈದ್ಯರು, ನರ್ಸ್ ಅಥವಾ ಆಂಬುಲೆನ್ಸ್‌ಗೆ ತೋರಿಸಿ. QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿದರೆ ನಿಮ್ಮ ಔಷಧಿ ಮತ್ತು ಕುಟುಂಬದ ಫೋನ್ ಕಾಣುತ್ತದೆ — ಇಂಟರ್ನೆಟ್ ಬೇಡ.',
 };
 
 const hi: Partial<Dict> = {
@@ -370,6 +384,13 @@ const hi: Partial<Dict> = {
   endTest: 'टेस्ट समाप्त करें',
   voiceReminders: 'रिमाइंडर कॉल',
   voiceRemindersHelp: 'दवा के समय आपका फ़ोन बजेगा और आपको परिवार, आशा दीदी या डॉक्टर का संदेश सुनाई देगा।',
+  streakTitle: 'लगातार दिन',
+  streakDays: '{n} दिन लगातार',
+  streakStart: 'आज की सभी दवाएँ लेकर सिलसिला शुरू करें!',
+  streakNext: '{m} दिन के सितारे तक {left} दिन और ⭐',
+  streakBest: 'सबसे अच्छा: {n} दिन',
+  emergencyCard: 'आपातकालीन कार्ड',
+  emergencyCardHelp: 'इसे डॉक्टर, नर्स या एम्बुलेंस को दिखाएँ। QR स्कैन करने पर आपकी दवाएँ और परिवार का फ़ोन दिखता है — इंटरनेट नहीं चाहिए।',
 };
 
 const DICTS: Record<Lang, Partial<Dict>> = { en, kn, hi };

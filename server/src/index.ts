@@ -19,6 +19,7 @@ import { demoRouter, healthRouter } from './routes/demo';
 import { dosesRouter } from './routes/doses';
 import { remindersRouter, voiceRouter } from './routes/reminders';
 import { assistantRouter } from './routes/assistant';
+import { emergencyRouter, visitsRouter } from './routes/care';
 import { alertMessageRouter, pharmacyRouter, reportRouter, scanRouter, teleconsultRouter, vitalsRouter } from './routes/features';
 import { patientsRouter } from './routes/patients';
 import { prescriptionsRouter } from './routes/prescriptions';
@@ -63,6 +64,7 @@ async function main() {
   app.use('/api', requireAuth);
   app.use('/api/patients/:id/vitals', vitalsRouter);
   app.use('/api/patients/:id/reminders', remindersRouter);
+  app.use('/api/patients/:id/emergency-card', emergencyRouter);
   app.use('/api/patients/:id/weekly-report', reportRouter);
   app.use('/api/patients', patientsRouter);
   app.use('/api/prescriptions', prescriptionsRouter);
@@ -80,6 +82,7 @@ async function main() {
   app.use('/api/pharmacies', pharmacyRouter);
   app.use('/api/voice-reminders', voiceRouter);
   app.use('/api/assistant', assistantRouter);
+  app.use('/api/visits', visitsRouter);
 
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
   app.use(errorHandler);

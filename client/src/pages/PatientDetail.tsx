@@ -65,6 +65,12 @@ export default function PatientDetail() {
               <Printer aria-hidden /> Weekly report (PDF)
             </Link>
             <Link
+              to={`/patients/${p.id}/card`}
+              className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border-2 border-bad-600 px-4 font-bold text-bad-700 hover:bg-bad-50"
+            >
+              🆘 Emergency card
+            </Link>
+            <Link
               to={`/${role === 'admin' ? 'doctor' : role}/reminders?patient=${p.id}`}
               className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border-2 border-navy-800 px-4 font-bold text-navy-800 hover:bg-navy-50"
             >

@@ -1,3 +1,4 @@
+import { streakFor } from '../services/streak';
 import { Router } from 'express';
 import { now } from '../clock';
 import { one, q } from '../db';
@@ -40,6 +41,7 @@ dashboardRouter.get(
     const patients = await Promise.all(
       ids.map(async (id) => ({
         summary: await patientSummary(id),
+        streak: await streakFor(id),
         today: await dosesForDay(id, today()),
         refills: await refillPredictions(id),
         alerts: await q(

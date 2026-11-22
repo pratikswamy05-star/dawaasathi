@@ -126,3 +126,27 @@ describe('voice assistant commands', () => {
     assert.equal(parseCommand('what is glycomet for').type, 'chat');
   });
 });
+
+import { computeStreak } from './streak';
+
+describe('adherence streaks', () => {
+  const day = (date: string, taken: number, missed = 0, pending = 0) => ({ date, taken, missed, pending });
+  it('counts full days back from yesterday while today is still open', () => {
+    const s = computeStreak([day('d1', 3, 1), day('d2', 3), day('d3', 3), day('d4', 3), day('d5', 1, 0, 2)]);
+    assert.equal(s.current, 3);
+    assert.equal(s.reached, 3);
+    assert.equal(s.next, 7);
+    assert.equal(s.start, 'd2');
+  });
+  it('includes today once every dose is taken', () => {
+    assert.equal(computeStreak([day('a', 2), day('b', 2)]).current, 2);
+  });
+  it('a missed dose today ends the streak; best keeps the record', () => {
+    const s = computeStreak([day('a', 2), day('b', 2), day('c', 2), day('d', 1, 1)]);
+    assert.equal(s.current, 0);
+    assert.equal(s.best, 3);
+  });
+  it('days without doses do not break it', () => {
+    assert.equal(computeStreak([day('a', 2), day('b', 0), day('c', 2), day('d', 0, 0, 1)]).current, 2);
+  });
+});

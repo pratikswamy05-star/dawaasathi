@@ -5,6 +5,7 @@
  *   3. raise refill alerts
  *   4. refresh risk scores
  */
+import { checkStreakMilestone } from '../services/streak';
 import { now } from '../clock';
 import { config } from '../config';
 import { q } from '../db';
@@ -82,6 +83,7 @@ export async function tickOnce() {
         }
       }
       await riskFor(pid);
+      await checkStreakMilestone(pid);
     }
   } finally {
     running = false;

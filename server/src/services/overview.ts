@@ -1,4 +1,5 @@
 /** Read models used by dashboards and reports: adherence, refill predictions, risk score. */
+import { streakFor } from './streak';
 import { now } from '../clock';
 import { config } from '../config';
 import { json, one, q } from '../db';
@@ -147,7 +148,7 @@ export async function patientSummary(patientId: number) {
 
 /** Everything about one patient, for detail pages. */
 export async function patientOverview(patientId: number) {
-  const [patient, todayDoses, adh7, adh30, series, refills, conflicts, risk, prescriptions] = await Promise.all([
+  const [patient, todayDoses, adh7, adh30, series, refills, conflicts, risk, prescriptions, streak] = await Promise.all([
     patientRow(patientId),
     dosesForDay(patientId, today()),
     adherence(patientId, 7),
@@ -157,6 +158,7 @@ export async function patientOverview(patientId: number) {
     patientConflicts(patientId),
     riskFor(patientId),
     activePrescriptions(patientId),
+    streakFor(patientId),
   ]);
-  return { patient, today: todayDoses, adherence7d: adh7, adherence30d: adh30, series, refills, conflicts, risk, prescriptions };
+  return { patient, today: todayDoses, adherence7d: adh7, adherence30d: adh30, series, refills, conflicts, risk, prescriptions, streak };
 }

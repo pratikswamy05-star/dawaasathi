@@ -1,3 +1,4 @@
+import StreakCard from '../../components/StreakCard';
 import { LifeBuoy, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { api, errorText } from '../../api/client';
@@ -10,10 +11,11 @@ import { useConfirmDose } from '../../hooks/useConfirmDose';
 import { useT } from '../../i18n';
 import { pctText } from '../../lib/format';
 import { toast } from '../../store/toast';
-import type { Alert, Dose, PatientSummary, RefillPrediction } from '../../types';
+import type { Alert, Dose, PatientSummary, RefillPrediction, Streak } from '../../types';
 
 interface Linked {
   summary: PatientSummary;
+  streak?: Streak;
   today: Dose[];
   refills: RefillPrediction[];
   alerts: Alert[];
@@ -46,7 +48,7 @@ export default function CaregiverDashboard() {
   return (
     <div className="space-y-8">
       <PageHeader title="Caregiver dashboard" subtitle="You will be alerted if a dose is missed. Never give an extra dose — ask the doctor if unsure." />
-      {data.patients.map(({ summary: s, today, refills, alerts }) => {
+      {data.patients.map(({ summary: s, streak, today, refills, alerts }) => {
         const missed = today.filter((d) => d.status === 'missed');
         const due = today.filter((d) => d.status === 'pending' && new Date(d.scheduled_at).getTime() <= Date.now());
         return (
@@ -62,7 +64,8 @@ export default function CaregiverDashboard() {
                       <h2 id={`p-${s.id}`} className="text-3xl font-black">
                         {s.name}
                       </h2>
-                      <span className="rounded-full bg-white/15 px-3 py-0.5 text-sm font-semibold">Risk {riskLabel(s.risk.level)}</span>
+                      <span className="rounded-full bg-white/15 px-3 py-0.5 text-sm font-semibold">Risk {riskLabel(s.risk.level)}</span>{' '}
+                      {streak && <StreakCard streak={streak} compact />}
                     </div>
                   </div>
                   <p className={`mt-3 inline-flex items-center gap-2 rounded-xl px-3 py-1 text-xl font-bold ${missed.length ? 'bg-bad-600' : 'bg-ok-600/80'}`}>
@@ -74,6 +77,9 @@ export default function CaregiverDashboard() {
                   <div className="mt-4 flex flex-wrap gap-2">
                     <Link to={`/patients/${s.id}`} className="inline-flex min-h-[48px] items-center rounded-xl bg-white px-4 font-bold text-navy-800 shadow transition hover:-translate-y-0.5">
                       Full details
+                    </Link>
+                    <Link to={`/patients/${s.id}/card`} className="glass inline-flex min-h-[48px] items-center gap-1 rounded-xl px-4 font-bold text-white transition hover:-translate-y-0.5">
+                      🆘 Emergency card
                     </Link>
                     <Link
                       to={`/caregiver/reminders?patient=${s.id}`}

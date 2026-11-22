@@ -244,4 +244,29 @@ create index if not exists voice_reminders_patient on voice_reminders (patient_i
 -- Reminder languages (spoken in this order at reminder time) and the language of each recording.
 alter table patients add column if not exists reminder_languages jsonb not null default '[]'::jsonb;
 alter table voice_reminders add column if not exists language text;
+
+-- Emergency card extras, ASHA home visits, streak milestones (praise sent once per streak).
+alter table patients add column if not exists blood_group text;
+alter table patients add column if not exists allergies text;
+alter table patients add column if not exists emergency_notes text;
+
+create table if not exists asha_visits (
+  id serial primary key,
+  patient_id int not null references patients (id) on delete cascade,
+  visit_date date not null,
+  status text not null check (status in ('visited', 'not_home')),
+  note text,
+  visited_by int references users (id) on delete set null,
+  created_at timestamptz not null default now(),
+  unique (patient_id, visit_date)
+);
+
+create table if not exists streak_milestones (
+  id serial primary key,
+  patient_id int not null references patients (id) on delete cascade,
+  days int not null,
+  streak_start date not null,
+  created_at timestamptz not null default now(),
+  unique (patient_id, days, streak_start)
+);
 `;
